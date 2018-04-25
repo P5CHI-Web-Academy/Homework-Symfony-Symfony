@@ -13,6 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Affiliate
 {
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -52,15 +54,14 @@ class Affiliate
      *
      * @ORM\Column(type="datetime")
      */
-    private $created_at;
+    private $createdAt;
 
     /**
      * @var Category[]|ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="Category", inversedBy="affiliates")
+     * @ORM\ManyToMany(targetEntity="Category", mappedBy="affiliates")
      */
     private $categories;
-
 
     /**
      * Affiliate constructor.
@@ -71,9 +72,9 @@ class Affiliate
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -159,16 +160,16 @@ class Affiliate
      */
     public function getCreatedAt(): ?\DateTime
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
     /**
-     * @param \DateTime $created_at
+     * @param \DateTime $createdAt
      * @return Affiliate
      */
-    public function setCreatedAt(\DateTime $created_at): self
+    public function setCreatedAt(\DateTime $createdAt): self
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }

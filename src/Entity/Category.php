@@ -13,6 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Category
 {
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -41,7 +43,6 @@ class Category
      */
     private $affiliates;
 
-
     /**
      * Category constructor.
      */
@@ -52,9 +53,9 @@ class Category
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -108,10 +109,6 @@ class Category
     {
         if ($this->jobs->contains($job)) {
             $this->jobs->removeElement($job);
-            // set the owning side to null (unless already changed)
-            if ($job->getCategory() === $this) {
-                $job->setCategory(null);
-            }
         }
 
         return $this;
