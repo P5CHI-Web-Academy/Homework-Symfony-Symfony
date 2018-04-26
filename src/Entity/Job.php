@@ -6,8 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\JobRepository")
  * @ORM\Table(name="jobs")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Job
 {
@@ -134,7 +135,7 @@ class Job
     private $category;
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getId(): ?int
     {
@@ -142,7 +143,7 @@ class Job
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getType(): ?string
     {
@@ -153,7 +154,7 @@ class Job
      * @param string $type
      * @return Job
      */
-    public function setType(string $type)
+    public function setType(string $type): self
     {
         $this->type = $type;
 
@@ -161,7 +162,7 @@ class Job
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getCompany(): ?string
     {
@@ -172,7 +173,7 @@ class Job
      * @param string $company
      * @return Job
      */
-    public function setCompany(string $company)
+    public function setCompany(string $company): self
     {
         $this->company = $company;
 
@@ -180,7 +181,7 @@ class Job
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getLogo(): ?string
     {
@@ -191,7 +192,7 @@ class Job
      * @param string $logo
      * @return Job
      */
-    public function setLogo(string $logo)
+    public function setLogo(string $logo): self
     {
         $this->logo = $logo;
 
@@ -199,7 +200,7 @@ class Job
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getUrl(): ?string
     {
@@ -210,7 +211,7 @@ class Job
      * @param string $url
      * @return Job
      */
-    public function setUrl(string $url)
+    public function setUrl(string $url): self
     {
         $this->url = $url;
 
@@ -218,7 +219,7 @@ class Job
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getPosition(): ?string
     {
@@ -229,7 +230,7 @@ class Job
      * @param string $position
      * @return Job
      */
-    public function setPosition(string $position)
+    public function setPosition(string $position): self
     {
         $this->position = $position;
 
@@ -237,7 +238,7 @@ class Job
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getLocation(): ?string
     {
@@ -248,7 +249,7 @@ class Job
      * @param string $location
      * @return Job
      */
-    public function setLocation(string $location)
+    public function setLocation(string $location): self
     {
         $this->location = $location;
 
@@ -256,7 +257,7 @@ class Job
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getDescription(): ?string
     {
@@ -267,7 +268,7 @@ class Job
      * @param string $description
      * @return Job
      */
-    public function setDescription(string $description)
+    public function setDescription(string $description): self
     {
         $this->description = $description;
 
@@ -275,7 +276,7 @@ class Job
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getHowToApply(): ?string
     {
@@ -286,7 +287,7 @@ class Job
      * @param string $howToApply
      * @return Job
      */
-    public function setHowToApply(string $howToApply)
+    public function setHowToApply(string $howToApply): self
     {
         $this->howToApply = $howToApply;
 
@@ -294,7 +295,7 @@ class Job
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getToken(): ?string
     {
@@ -305,7 +306,7 @@ class Job
      * @param string $token
      * @return Job
      */
-    public function setToken(string $token)
+    public function setToken(string $token): self
     {
         $this->token = $token;
 
@@ -313,7 +314,7 @@ class Job
     }
 
     /**
-     * @return bool
+     * @return bool|null
      */
     public function isPublic(): ?bool
     {
@@ -324,7 +325,7 @@ class Job
      * @param bool $public
      * @return Job
      */
-    public function setPublic(bool $public)
+    public function setPublic(bool $public): self
     {
         $this->public = $public;
 
@@ -332,7 +333,7 @@ class Job
     }
 
     /**
-     * @return bool
+     * @return bool|null
      */
     public function isActivated(): ?bool
     {
@@ -343,7 +344,7 @@ class Job
      * @param bool $activated
      * @return Job
      */
-    public function setActivated(bool $activated)
+    public function setActivated(bool $activated): self
     {
         $this->activated = $activated;
 
@@ -351,7 +352,7 @@ class Job
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getEmail(): ?string
     {
@@ -362,7 +363,7 @@ class Job
      * @param string $email
      * @return Job
      */
-    public function setEmail(string $email)
+    public function setEmail(string $email): self
     {
         $this->email = $email;
 
@@ -370,7 +371,7 @@ class Job
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTime|null
      */
     public function getExpiresAt(): ?\DateTime
     {
@@ -381,7 +382,7 @@ class Job
      * @param \DateTime $expiresAt
      * @return Job
      */
-    public function setExpiresAt(\DateTime $expiresAt)
+    public function setExpiresAt(\DateTime $expiresAt): self
     {
         $this->expiresAt = $expiresAt;
 
@@ -389,7 +390,7 @@ class Job
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTime|null
      */
     public function getCreatedAt(): ?\DateTime
     {
@@ -400,7 +401,7 @@ class Job
      * @param \DateTime $createdAt
      * @return Job
      */
-    public function setCreatedAt(\DateTime $createdAt)
+    public function setCreatedAt(\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
 
@@ -408,7 +409,7 @@ class Job
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTime|null
      */
     public function getUpdatedAt(): ?\DateTime
     {
@@ -419,7 +420,7 @@ class Job
      * @param \DateTime $updatedAt
      * @return Job
      */
-    public function setUpdatedAt(\DateTime $updatedAt)
+    public function setUpdatedAt(\DateTime $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 
@@ -427,7 +428,7 @@ class Job
     }
 
     /**
-     * @return Category
+     * @return Category|null
      */
     public function getCategory(): ?Category
     {
@@ -438,11 +439,27 @@ class Job
      * @param Category $category
      * @return Job
      */
-    public function setCategory(Category $category)
+    public function setCategory(Category $category): self
     {
         $this->category = $category;
 
         return $this;
     }
 
+    /**
+     * @ORM\PrePersist()
+     */
+    public function prePersist(): void
+    {
+        $this->createdAt = new \DateTime('now', new\DateTimeZone('UTC'));
+        $this->updatedAt = new \DateTime('now', new\DateTimeZone('UTC'));
+    }
+
+    /**
+     * @ORM\PreUpdate()
+     */
+    public function preUpdate(): void
+    {
+        $this->updatedAt = new \DateTime('now', new\DateTimeZone('UTC'));
+    }
 }

@@ -3,11 +3,14 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\AffiliateRepository")
  * @ORM\Table(name="affiliates")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Affiliate
 {
@@ -49,11 +52,25 @@ class Affiliate
     private $active;
 
     /**
+     * @var Category[]|Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Category", inversedBy="affiliates")
+     * @ORM\JoinTable(name="affiliates_categories")
+     */
+    private $categories;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
+
+
+    public function __construct()
+    {
+        $this->categories = new ArrayCollection();
+    }
 
     /**
      * @return int|null
@@ -75,7 +92,7 @@ class Affiliate
      * @param string $url
      * @return Affiliate
      */
-    public function setUrl(string $url)
+    public function setUrl(string $url): self
     {
         $this->url = $url;
 
@@ -94,7 +111,7 @@ class Affiliate
      * @param string $email
      * @return Affiliate
      */
-    public function setEmail(string $email)
+    public function setEmail(string $email): self
     {
         $this->email = $email;
 
@@ -113,7 +130,7 @@ class Affiliate
      * @param string $token
      * @return Affiliate
      */
-    public function setToken(string $token)
+    public function setToken(string $token): self
     {
         $this->token = $token;
 
@@ -132,7 +149,7 @@ class Affiliate
      * @param bool $active
      * @return Affiliate
      */
-    public function setActive(bool $active)
+    public function setActive(bool $active): self
     {
         $this->active = $active;
 
@@ -151,10 +168,52 @@ class Affiliate
      * @param \DateTime $createdAt
      * @return Affiliate
      */
-    public function setCreatedAt(\DateTime $createdAt)
+    public function setCreatedAt(\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
 
         return $this;
+    }
+
+    /**
+     * @return Category[]|Collection
+     */
+    public function getCategories()
+    {
+        return $this->categories;
+    }
+
+    /**
+     * @param Category $category
+     * @return $this
+     */
+    public function addCategory(Category $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories->add($category);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Category $category
+     * @return $this
+     */
+    public function removeCategory(Category $category): self
+    {
+        if ($this->categories->contains($category)) {
+            $this->categories->removeElement($category);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function prePersist(): void
+    {
+        $this->createdAt = new \DateTime('now', new\DateTimeZone('UTC'));
     }
 }
