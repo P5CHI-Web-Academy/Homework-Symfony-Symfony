@@ -5,7 +5,6 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class Job
  * @ORM\Entity()
  * @ORM\Table(name="jobs")
  */
@@ -33,13 +32,13 @@ class Job{
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $logo;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $url;
 
@@ -65,7 +64,7 @@ class Job{
      * @var string
      * @ORM\Column(type="text")
      */
-    private $how_to_apply;
+    private $howToApply;
 
     /**
      * @var string
@@ -95,19 +94,19 @@ class Job{
      * @var datetime
      * @ORM\Column(type="datetime")
      */
-    private $expires_at;
+    private $expiresAt;
 
     /**
      * @var datetime
      * @ORM\Column(type="datetime")
      */
-    private $created_at;
+    private $createdAt;
 
     /**
      * @var datetime
      * @ORM\Column(type="datetime")
      */
-    private $updated_at;
+    private $updatedAt;
 
     /**
      * @return int
@@ -178,7 +177,7 @@ class Job{
      */
     public function getHowToApply(): string
     {
-        return $this->how_to_apply;
+        return $this->howToApply;
     }
 
     /**
@@ -218,7 +217,7 @@ class Job{
      */
     public function getExpiresAt(): DateTime
     {
-        return $this->expires_at;
+        return $this->expiresAt;
     }
 
     /**
@@ -226,7 +225,7 @@ class Job{
      */
     public function getCreatedAt(): DateTime
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
     /**
@@ -234,7 +233,7 @@ class Job{
      */
     public function getUpdatedAt(): DateTime
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
     /**
@@ -315,12 +314,12 @@ class Job{
     }
 
     /**
-     * @param string $how_to_apply
+     * @param string $howToApply
      * @return Job
      */
-    public function setHowToApply(string $how_to_apply): Job
+    public function setHowToApply(string $howToApply): Job
     {
-        $this->how_to_apply = $how_to_apply;
+        $this->howToApply = $howToApply;
 
         return $this;
     }
@@ -370,39 +369,39 @@ class Job{
     }
 
     /**
-     * @param DateTime $expires_at
+     * @param DateTime $expiresAt
      * @return Job
      */
-    public function setExpiresAt(DateTime $expires_at): Job
+    public function setExpiresAt(DateTime $expiresAt): Job
     {
-        $this->expires_at = $expires_at;
+        $this->expiresAt = $expiresAt;
 
         return $this;
     }
 
     /**
-     * @param DateTime $created_at
+     * @param DateTime $createdAt
      * @return Job
      */
-    public function setCreatedAt(DateTime $created_at): Job
+    public function setCreatedAt(DateTime $createdAt): Job
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     /**
-     * @param DateTime $updated_at
+     * @param DateTime $updatedAt
      * @return Job
      */
-    public function setUpdatedAt(DateTime $updated_at): Job
+    public function setUpdatedAt(DateTime $updatedAt): Job
     {
-        $this->updated_at = $updated_at;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
     /*TODO: implement the column as a relation
-    private $category_id;
+    private $categoryId;
     */
 }

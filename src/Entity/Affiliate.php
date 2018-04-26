@@ -5,7 +5,6 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class Affiliate
  * @ORM\Entity()
  * @ORM\Table(name="affiliates")
  */
@@ -48,7 +47,7 @@ class Affiliate
      * @var datetime
      * @ORM\Column(type="datetime")
      */
-    private $created_at;
+    private $createdAt;
 
     /**
      * @return int
@@ -95,7 +94,7 @@ class Affiliate
      */
     public function getCreatedAt(): DateTime
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
     /**
@@ -143,12 +142,12 @@ class Affiliate
     }
 
     /**
-     * @param DateTime $created_at
+     * @param DateTime $createdAt
      * @return Affiliate
      */
-    public function setCreatedAt(DateTime $created_at): Affiliate
+    public function setCreatedAt(DateTime $createdAt): Affiliate
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }

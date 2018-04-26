@@ -4,7 +4,6 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class Category
  * @ORM\Entity()
  * @ORM\Table(name="categories")
  */
