@@ -109,6 +109,13 @@ class Job{
     private $updatedAt;
 
     /**
+     * @var Category
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="jobs")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $category;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -234,6 +241,14 @@ class Job{
     public function getUpdatedAt(): DateTime
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * @return Category|null
+     */
+    public function getCategory(): ?Category
+    {
+        return $this->category;
     }
 
     /**
@@ -401,7 +416,14 @@ class Job{
         return $this;
     }
 
-    /*TODO: implement the column as a relation
-    private $categoryId;
-    */
+    /**
+     * @param Category|null $category
+     * @return Job
+     */
+    public function setCategory(?Category $category): Job
+    {
+        $this->category = $category;
+
+        return $this;
+    }
 }
