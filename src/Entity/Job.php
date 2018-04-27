@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="jobs")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Job{
 
@@ -98,7 +99,7 @@ class Job{
 
     /**
      * @var datetime
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", options={"default": "CURRENT_TIMESTAMP"})
      */
     private $createdAt;
 
@@ -406,14 +407,11 @@ class Job{
     }
 
     /**
-     * @param DateTime $updatedAt
-     * @return Job
+     * @ORM\PreUpdate()
      */
-    public function setUpdatedAt(DateTime $updatedAt): Job
+    public function setUpdatedAt(): void
     {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
+        $this->updatedAt = new DateTime();
     }
 
     /**
