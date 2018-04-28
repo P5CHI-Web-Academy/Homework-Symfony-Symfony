@@ -99,13 +99,13 @@ class Job{
 
     /**
      * @var datetime
-     * @ORM\Column(type="datetime", options={"default": "CURRENT_TIMESTAMP"})
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $createdAt;
 
     /**
      * @var datetime
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $updatedAt;
 
@@ -234,6 +234,11 @@ class Job{
     public function getCreatedAt(): DateTime
     {
         return $this->createdAt;
+    }
+
+    public function __construct()
+    {
+        $this->createdAt = new DateTime();
     }
 
     /**

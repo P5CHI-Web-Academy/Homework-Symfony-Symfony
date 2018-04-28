@@ -47,7 +47,7 @@ class Affiliate
 
     /**
      * @var datetime
-     * @ORM\Column(type="datetime", options={"default": "CURRENT_TIMESTAMP"})
+     * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
@@ -60,6 +60,7 @@ class Affiliate
 
     public function __construct()
     {
+        $this->createdAt = new DateTime();
         $this->categories = new ArrayCollection();
     }
 
