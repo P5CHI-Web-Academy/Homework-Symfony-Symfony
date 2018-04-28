@@ -2,14 +2,18 @@
 
 namespace App\Entity;
 
+use App\Traits\TimestampsTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\JobRepository")
  * @ORM\Table(name="jobs")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Job
 {
+    use TimestampsTrait;
+
     /**
      * @var int
      *
@@ -109,20 +113,6 @@ class Job
      * @ORM\Column(type="datetime")
      */
     private $expiresAt;
-
-    /**
-     * @var \DateTime
-     * 
-     * @ORM\Column(type="datetime")
-     */
-    private $createdAt;
-
-    /**
-     * @var \DateTime
-     * 
-     * @ORM\Column(type="datetime")
-     */
-    private $updatedAt;
 
     /**
      * @var Category
@@ -383,44 +373,6 @@ class Job
     public function setExpiresAt(\DateTime $expiresAt): self
     {
         $this->expiresAt = $expiresAt;
-
-        return $this;
-    }
-
-    /**
-     * @return \DateTime|null
-     */
-    public function getCreatedAt(): ?\DateTime
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @param \DateTime $createdAt
-     * @return Job
-     */
-    public function setCreatedAt(\DateTime $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * @return \DateTime|null
-     */
-    public function getUpdatedAt(): ?\DateTime
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * @param \DateTime $updatedAt
-     * @return Job
-     */
-    public function setUpdatedAt(\DateTime $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
 
         return $this;
     }
