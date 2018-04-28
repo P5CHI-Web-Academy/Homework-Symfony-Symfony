@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Table(name="jobs")
  * @ORM\Entity(repositoryClass="App\Repository\JobRepository")
  */
@@ -93,8 +94,33 @@ class Job
     private $updatedAt;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="jobs")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     */
+    private $category;
+
+
+    /**
+     * @return Category|null
+     */
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+
+    /**
+     * @param $category
+     */
+    public function setCategory(?Category $category): void
+    {
+        $this->category = $category;
+    }
+
+    /**
      * @return null|int
      */
+
     public function getId(): ?int
     {
         return $this->id;
@@ -398,5 +424,22 @@ class Job
         $this->updatedAt = $updatedAt;
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function prePersist(): void
+    {
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
+    }
+
+    /**
+     * @ORM\PreUpdate()
+     */
+    public function preUpdate(): void
+    {
+        $this->updatedAt = new \DateTime();
     }
 }

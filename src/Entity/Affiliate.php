@@ -2,9 +2,12 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Table(name="affiliates")
  * @ORM\Entity(repositoryClass="App\Repository\AffiliateRepository")
  */
@@ -42,6 +45,50 @@ class Affiliate
      */
     private $createdAt;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Category", inversedBy="affiliates")
+     * @ORM\JoinTable(name="categories_affiliates")
+     */
+    private $categories;
+
+    public function __construct()
+    {
+        $this->categories = new ArrayCollection();
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    /**
+     * @param Category $category
+     *
+     * @return Affiliate
+     */
+    public function addCategory(Category $category): Affiliate
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories->add($category);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Category $category
+     *
+     * @return Affiliate
+     */
+    public function removeCategory(Category $category): Affiliate
+    {
+        $this->categories->removeElement($category);
+
+        return $this;
+    }
 
     /**
      * @return null|int
@@ -149,5 +196,13 @@ class Affiliate
         $this->createdAt = $createdAt;
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function prePersist(): void
+    {
+        $this->createdAt = new \DateTime();
     }
 }

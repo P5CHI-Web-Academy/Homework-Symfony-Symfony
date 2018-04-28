@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,6 +24,53 @@ class Category
      */
     private $name;
 
+    /**
+     * @var Collection
+     * @ORM\ManyToMany(targetEntity="Affiliate", mappedBy="categories")
+     */
+    private $affiliates;
+
+    /**
+     * @var Collection
+     * @ORM\OneToMany(targetEntity="Job", mappedBy="category")
+     */
+    private $jobs;
+
+    public function __construct()
+    {
+        $this->jobs = new ArrayCollection();
+        $this->affiliates = new ArrayCollection();
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getJobs(): Collection
+    {
+        return $this->jobs;
+    }
+
+    /**
+     * @param Job $job
+     * @return Category
+     */
+    public function addJob(Job $job): Category
+    {
+        $this->jobs->add($job);
+
+        return $this;
+    }
+
+    /**
+     * @param Job $job
+     * @return Category
+     */
+    public function removeJob(Job $job): Category
+    {
+        $this->jobs->removeElement($job);
+
+        return $this;
+    }
 
     /**
      * @return null|int
@@ -29,6 +78,34 @@ class Category
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * @param Affiliate|null $affiliate
+     *
+     * @return Category
+     */
+    public function addAffiliate(Affiliate $affiliate): Category
+    {
+        if (!$this->affiliates->contains($affiliate)) {
+            $this->affiliates->add($affiliate);
+        }
+
+        return $this;
+    }
+
+    public function removeAffiliate(Affiliate $affiliate): Category
+    {
+        $this->affiliates->removeElement($affiliate);
+        return $this;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getAffiliates(): Collection
+    {
+        return $this->affiliates;
     }
 
     /**
