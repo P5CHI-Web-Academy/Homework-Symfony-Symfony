@@ -214,6 +214,6 @@ class Affiliate
      */
     public function prePersist(): void
     {
-        $this->createdAt = new \DateTime('now', new\DateTimeZone('UTC'));
+        $this->createdAt = new \DateTime();
     }
 }

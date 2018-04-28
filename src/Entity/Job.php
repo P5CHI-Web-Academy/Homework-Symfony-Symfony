@@ -451,8 +451,8 @@ class Job
      */
     public function prePersist(): void
     {
-        $this->createdAt = new \DateTime('now', new\DateTimeZone('UTC'));
-        $this->updatedAt = new \DateTime('now', new\DateTimeZone('UTC'));
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
     }
 
     /**
@@ -460,6 +460,6 @@ class Job
      */
     public function preUpdate(): void
     {
-        $this->updatedAt = new \DateTime('now', new\DateTimeZone('UTC'));
+        $this->updatedAt = new \DateTime();
     }
 }
