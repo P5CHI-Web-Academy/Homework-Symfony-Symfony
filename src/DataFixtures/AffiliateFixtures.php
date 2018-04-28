@@ -49,8 +49,8 @@ class AffiliateFixtures extends Fixture implements DependentFixtureInterface
      */
     public function getDependencies(): array
     {
-        return array(
+        return [
             CategoryFixtures::class,
-        );
+        ];
     }
 }
