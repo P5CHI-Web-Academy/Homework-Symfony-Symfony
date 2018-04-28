@@ -4,7 +4,7 @@ namespace App\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
 
-trait Timestamps
+trait TimestampsTrait
 {
     /**
      * @var \DateTime
@@ -63,7 +63,7 @@ trait Timestamps
      *
      * @return void
      */
-    public function setTimestamp(): void
+    public function prePersist(): void
     {
         if (!$this->createdAt) {
             $this->createdAt = new \DateTime();
@@ -79,7 +79,7 @@ trait Timestamps
      *
      * @return void
      */
-    public function updateTimestamp(): void
+    public function preUpdate(): void
     {
         $this->updatedAt = new \DateTime();
     }

@@ -22,7 +22,7 @@ class JobFixtures extends Fixture implements DependentFixtureInterface
 
         for ($i = 0; $i < 12; $i++) {
             $job = new Job();
-            $job->setType($faker->shuffleArray(['private', 'public'])[0]);
+            $job->setType($faker->randomElement(['private', 'public']));
             $job->setCompany($faker->company);
             $job->setLogo($job->getCompany());
             $job->setUrl($faker->url);
@@ -31,7 +31,7 @@ class JobFixtures extends Fixture implements DependentFixtureInterface
             $job->setDescription($faker->text);
             $job->setHowToApply($faker->text);
             $job->setToken($faker->md5);
-            $job->setPublic($faker->shuffleArray([true, false])[0]);
+            $job->setPublic($faker->randomElement([true, false]));
             $job->setActivated(true);
             $job->setEmail($faker->companyEmail);
             $job->setExpiresAt(new \DateTime('+2 months'));

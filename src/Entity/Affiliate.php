@@ -214,7 +214,7 @@ class Affiliate
      *
      * @return void
      */
-    public function setTimestamp(): void
+    public function prePersist(): void
     {
         if (!$this->createdAt) {
             $this->createdAt = new \DateTime();

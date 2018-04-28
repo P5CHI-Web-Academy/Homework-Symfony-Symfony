@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Traits\Timestamps;
+use App\Traits\TimestampsTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Job
 {
-    use Timestamps;
+    use TimestampsTrait;
 
     /**
      * @var int
