@@ -18,7 +18,9 @@ class JobController extends AbstractController
      */
     public function index()
     {
-        $jobs = $this->getDoctrine()->getRepository(Job::class)->findAll();
+        $jobs = $this->getDoctrine()
+            ->getRepository(Job::class)
+            ->findAll();
 
         return $this->render('job/index.html.twig', compact('jobs'));
     }
