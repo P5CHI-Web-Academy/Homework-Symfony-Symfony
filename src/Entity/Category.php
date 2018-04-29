@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Category
 {
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -21,6 +23,29 @@ class Category
      * @ORM\Column(type="string", length=100)
      */
     private $name;
+
+    /**
+     * @var Job[]|ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\Job", mappedBy="category")
+     */
+    private $jobs;
+
+    /**
+     * @var Affiliate[]|ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Affiliate", mappedBy="categories")
+     */
+    private $affiliates;
+
+    /**
+     * Category constructor.
+     */
+    public function __construct()
+    {
+        $this->jobs = new ArrayCollection();
+        $this->affiliates = new ArrayCollection();
+    }
 
     /**
      * @return null|int
@@ -45,6 +70,74 @@ class Category
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return Job[]|ArrayCollection
+     */
+    public function getJobs()
+    {
+        return $this->jobs;
+    }
+
+    /**
+     * @param Job $job
+     *
+     * @return self
+     */
+    public function addJob(Job $job): self
+    {
+        if (!$this->jobs->contains($job)) {
+            $this->jobs->add($job);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Job $job
+     *
+     * @return self
+     */
+    public function removeJob(Job $job): self
+    {
+        $this->jobs->removeElement($job);
+
+        return $this;
+    }
+
+    /**
+     * @return Affiliate[]|ArrayCollection
+     */
+    public function getAffiliates()
+    {
+        return $this->affiliates;
+    }
+
+    /**
+     * @param Affiliate $affiliate
+     *
+     * @return self
+     */
+    public function addAffiliate(Affiliate $affiliate): self
+    {
+        if (!$this->affiliates->contains($affiliate)) {
+            $this->affiliates->add($affiliate);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Affiliate $affiliate
+     *
+     * @return self
+     */
+    public function removeAffiliate($affiliate): self
+    {
+        $this->affiliates->removeElement($affiliate);
 
         return $this;
     }
