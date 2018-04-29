@@ -5,7 +5,7 @@ namespace App\DataFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Faker\Factory;
+use Faker;
 use App\Entity\Job;
 use App\Entity\Category;
 
@@ -19,7 +19,7 @@ class JobsFixtures extends Fixture implements DependentFixtureInterface
      */
     public function load(ObjectManager $manager): void
     {
-        $faker = Factory::create();
+        $faker = Faker\Factory::create();
 
         for ($i = 1; $i <= self::COUNT; $i++) {
             /** @var Category $category */

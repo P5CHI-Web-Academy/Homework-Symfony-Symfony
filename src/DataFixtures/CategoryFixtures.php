@@ -4,7 +4,7 @@ namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
-use Faker\Factory;
+use Faker;
 use App\Entity\Category;
 
 
@@ -19,7 +19,7 @@ class CategoryFixtures extends Fixture
      */
     public function load(ObjectManager $manager): void
     {
-        $faker = Factory::create();
+        $faker = Faker\Factory::create();
 
         for ($i = 1; $i <= self::COUNT; $i++) {
             $category = new Category();
@@ -47,6 +47,6 @@ class CategoryFixtures extends Fixture
      */
     public static function generateReferenceKey($id): string
     {
-        return CategoryFixtures::REFERENCE.$id;
+        return CategoryFixtures::REFERENCE . $id;
     }
 }
