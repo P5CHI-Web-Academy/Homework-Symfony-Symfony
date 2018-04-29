@@ -3,11 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
  * @ORM\Table(name="categories")
  */
 class Category
@@ -34,6 +35,13 @@ class Category
      * @ORM\OneToMany(targetEntity="Job", mappedBy="category")
      */
     private $jobs;
+
+    /**
+     * @var Affiliate[]|ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Affiliate", mappedBy="categories")
+     */
+    private $affiliates;
 
     /**
      * Category constructor.
@@ -71,9 +79,9 @@ class Category
     }
 
     /**
-     * @return Job[]|ArrayCollection
+     * @return Job[]|Collection
      */
-    public function getJobs(): ArrayCollection
+    public function getJobs(): Collection
     {
         return $this->jobs;
     }
@@ -82,7 +90,7 @@ class Category
      * @param Job $job
      * @return $this
      */
-    public function addJob(Job $job)
+    public function addJob(Job $job): self
     {
         if (!$this->jobs->contains($job)) {
             $this->jobs->add($job);
@@ -96,7 +104,7 @@ class Category
      * @param Job $job
      * @return $this
      */
-    public function removeJob(Job $job)
+    public function removeJob(Job $job): self
     {
         if ($this->jobs->contains($job)) {
             $this->jobs->removeElement($job);
@@ -104,4 +112,39 @@ class Category
 
         return $this;
     }
+
+    /**
+     * @return Affiliate[]|ArrayCollection
+     */
+    public function getAffiliates(): Collection
+    {
+        return $this->affiliates;
+    }
+
+    /**
+     * @param Affiliate $affiliate
+     * @return $this
+     */
+    public function addAffiliate(Affiliate $affiliate): self
+    {
+        if (!$this->affiliates->contains($affiliate)) {
+            $this->affiliates->add($affiliate);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Affiliate $affiliate
+     * @return $this
+     */
+    public function removeAffiliate(Affiliate $affiliate): self
+    {
+        if ($this->affiliates->contains($affiliate)) {
+            $this->affiliates->removeElement($affiliate);
+        }
+
+        return $this;
+    }
+
 }
