@@ -78,8 +78,7 @@ class Affiliate
      */
     public function addCategory(Category $category): Affiliate
     {
-        if(!$this->categories->contains($category))
-        {
+        if(!$this->categories->contains($category)) {
             $this->categories->add($category);
         }
 
