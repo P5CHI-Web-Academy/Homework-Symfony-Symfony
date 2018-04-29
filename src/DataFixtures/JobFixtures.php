@@ -21,13 +21,13 @@ class JobFixtures extends Fixture implements DependentFixtureInterface
         for ($i = 0; $i < 10; $i++) {
             $job = new Job();
             $job->setActivated(true);
-            $job->setCategory($this->getReference('category_'.$i));
+            $job->setCategory($this->getReference('category_' . $i));
             $job->setCompany($faker->company);
             $job->setDescription($faker->paragraph);
             $job->setEmail($faker->email);
             $job->setExpiresAt($faker->dateTime);
             $job->setPublic($faker->boolean);
-            $job->setToken($faker->password(6,6));
+            $job->setToken($faker->password(6, 6));
             $job->setHowToApply($faker->paragraph);
             $job->setLocation($faker->city);
             $job->setPosition($faker->word);
@@ -46,8 +46,8 @@ class JobFixtures extends Fixture implements DependentFixtureInterface
      */
     public function getDependencies(): array
     {
-        return array(
+        return [
             CategoryFixtures::class,
-        );
+        ];
     }
 }

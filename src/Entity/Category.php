@@ -58,7 +58,11 @@ class Category{
      */
     public function addJob(Job $job): Category
     {
-        $this->jobs->add($job);
+        if(!$this->jobs->contains($job))
+        {
+            $this->jobs->add($job);
+        }
+
         return $this;
     }
 

@@ -16,13 +16,14 @@ class AffiliateFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         $faker = Faker\Factory::create('en_US');
+
         for ($i = 0; $i < 10; $i++) {
             $affiliate = new Affiliate();
             $affiliate->setUrl($faker->url);
             $affiliate->setEmail($faker->email);
-            $affiliate->setToken($faker->password(6,6));
+            $affiliate->setToken($faker->password(6, 6));
             $affiliate->setActive($faker->boolean);
-            $affiliate->addCategory($this->getReference('category_'.$i));
+            $affiliate->addCategory($this->getReference('category_' . $i));
             $manager->persist($affiliate);
         }
 
@@ -34,8 +35,8 @@ class AffiliateFixtures extends Fixture implements DependentFixtureInterface
      */
     public function getDependencies(): array
     {
-        return array(
+        return [
             CategoryFixtures::class,
-        );
+        ];
     }
 }
