@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="jobs")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Job{
 
@@ -98,15 +99,22 @@ class Job{
 
     /**
      * @var datetime
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $createdAt;
 
     /**
      * @var datetime
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $updatedAt;
+
+    /**
+     * @var Category
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="jobs")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $category;
 
     /**
      * @return int
@@ -228,12 +236,25 @@ class Job{
         return $this->createdAt;
     }
 
+    public function __construct()
+    {
+        $this->createdAt = new DateTime();
+    }
+
     /**
      * @return DateTime
      */
     public function getUpdatedAt(): DateTime
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * @return Category|null
+     */
+    public function getCategory(): ?Category
+    {
+        return $this->category;
     }
 
     /**
@@ -391,17 +412,21 @@ class Job{
     }
 
     /**
-     * @param DateTime $updatedAt
+     * @ORM\PreUpdate()
+     */
+    public function setUpdatedAt(): void
+    {
+        $this->updatedAt = new DateTime();
+    }
+
+    /**
+     * @param Category|null $category
      * @return Job
      */
-    public function setUpdatedAt(DateTime $updatedAt): Job
+    public function setCategory(?Category $category): Job
     {
-        $this->updatedAt = $updatedAt;
+        $this->category = $category;
 
         return $this;
     }
-
-    /*TODO: implement the column as a relation
-    private $categoryId;
-    */
 }
