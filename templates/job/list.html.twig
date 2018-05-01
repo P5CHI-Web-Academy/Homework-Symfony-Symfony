@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Jobeet Project{% endblock %}
+
+{% block body %}
+    <table class="table table-striped table-hover table-sm">
+        <tr class="thead-dark">
+            <th>id</th>
+            <th>Position</th>
+            <th>Company</th>
+            <th>Category</th>
+        </tr>
+        {% for job in jobs %}
+            <tr>
+                <td>{{ job.id }}</td>
+                <td>{{ job.position }}</td>
+                <td>{{ job.company }}</td>
+                <td>{{ job.category.name }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
