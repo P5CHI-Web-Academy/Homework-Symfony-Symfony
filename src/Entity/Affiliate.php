@@ -61,6 +61,15 @@ class Affiliate
     }
 
     /**
+     * toString
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string)$this->getId();
+    }
+
+    /**
      * @return int|null
      */
     public function getId(): ?int
@@ -161,6 +170,14 @@ class Affiliate
         $this->createdAt = $createdAt;
 
         return $this;
+    }
+
+    /**
+     * @return Category[]|ArrayCollection
+     */
+    public function getCategories()
+    {
+        return $this->categories;
     }
 
     /**

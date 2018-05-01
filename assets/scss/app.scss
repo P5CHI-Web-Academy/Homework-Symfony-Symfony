@@ -1,0 +1,28 @@
+@import '~@coreui/coreui/scss/coreui';
+@import "~datatables.net-bs4/css/dataTables.bootstrap4.css";
+
+.main-table {
+  width: calc(100% - 200px);
+  margin-left: auto;
+}
+
+.form-main {
+  padding: 15px;
+}
+
+.app-body {
+  flex-grow: 0;
+}
+
+.app-footer {
+  margin-top: auto;
+}
+
+.header-block {
+  display: flex;
+  padding: 20px;
+  justify-content: space-between;
+  a {
+    line-height: 2rem;
+  }
+}

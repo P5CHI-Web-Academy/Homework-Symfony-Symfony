@@ -1,24 +1,34 @@
+// подключим плагин
 var Encore = require('@symfony/webpack-encore');
 
 Encore
-    // the project directory where compiled assets will be stored
+     /* Установим путь куда будет осуществляться сборка */
     .setOutputPath('public/build/')
-    // the public path used by the web server to access the previous directory
+    /* Укажем web путь до каталога web/build */
     .setPublicPath('/build')
+    /* Каждый раз перед сборкой будем очищать каталог /build */
     .cleanupOutputBeforeBuild()
+    // jquery
+    .autoProvidejQuery()
+    /* Включим поддержку sass/scss файлов */
+    .enableSassLoader()
+    /* --- Добавим основной JavaScript в сборку --- */
+    .addEntry('js/app', './assets/js/app.js')
+    /* Добавим наш главный файл ресурсов в сборку */
+    .addStyleEntry('css/app', './assets/scss/app.scss')
+    /* В режиме разработки будем генерировать карту ресурсов */
     .enableSourceMaps(!Encore.isProduction())
-    // uncomment to create hashed filenames (e.g. app.abc123.css)
-    // .enableVersioning(Encore.isProduction())
 
-    // uncomment to define the assets of the project
-    // .addEntry('js/app', './assets/js/app.js')
-    // .addStyleEntry('css/app', './assets/css/app.scss')
+    .enableVersioning(Encore.isProduction());
 
-    // uncomment if you use Sass/SCSS files
-    // .enableSassLoader()
+/* Экспортируем финальную конфигурацию */
+var config = Encore.getWebpackConfig();
 
-    // uncomment for legacy applications that require $/jQuery as a global variable
-    // .autoProvidejQuery()
-;
+//disable amd loader
+config.module.rules.unshift({
+    parser: {
+        amd: false,
+    }
+});
 
-module.exports = Encore.getWebpackConfig();
+module.exports = config;
