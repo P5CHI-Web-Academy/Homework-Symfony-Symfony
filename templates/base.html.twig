@@ -1,12 +1,42 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Jobeet{% endblock %}</title>
+    {% block stylesheets %}
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    {% endblock %}
+
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="=navbar-header">
+            <form class="form-inline" method="get" action="job">
+                <a class="navbar-brand" href="{{ url('job.list') }}">Jobeet</a>
+                <div class="form-group navbar-right">
+                    <input class="form-control" type="text" name="searchRequest" placeholder="Search job">
+                    <a href="{{ url('job.list') }}" class="btn btn-default navbar-btn">Search</a>
+                    <a href="{{ url('job.list') }}" class="btn btn-primary navbar-btn">Post a job</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</nav>
+
+{% block body %}{% endblock %}
+{% block javascripts %}{% endblock %}
+
+<div class="container">
+    <h4>
+        <a href="#">AboutJobeet | </a>
+        <a href="#">Full RSS Feed | </a>
+        <a href="#">Jobeet API | </a>
+        <a href="#">Affiliates</a>
+    </h4>
+</div>
+
+</body>
+
 </html>
