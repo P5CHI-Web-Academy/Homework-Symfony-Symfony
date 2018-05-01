@@ -15,23 +15,27 @@ class JobsController extends Controller
      */
     public function index()
     {
+        $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
+
         $jobs = $this->getDoctrine()->getRepository(Job::class)->findAll();
 
         return $this->render('jobs/index.html.twig', compact('jobs', 'categories'));
     }
 
     /**
-     * @Route("/categories/{id}/jobs", name="jobs.by.categorie")
+     * @Route("/categories/{id}/jobs", name="jobs.by.category")
      * @param $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function jobsByCategorie($id)
+    public function jobsByCategory($id)
     {
-        $categorie = $this->getDoctrine()->getRepository(Category::class)->findOneBy(['id' => $id]);
+        $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
 
-        $jobs = $categorie->getJobs();
+        $category = $this->getDoctrine()->getRepository(Category::class)->find($id);
 
-        return $this->render('jobs/index.html.twig', compact('jobs', 'categories'));
+        $jobs = $category->getJobs();
+
+        return $this->render('jobs/index.html.twig', compact('jobs', 'category', 'categories'));
     }
 
     /**
@@ -41,7 +45,9 @@ class JobsController extends Controller
      */
     public function show($id)
     {
-        $job = $this->getDoctrine()->getRepository(Job::class)->findOneBy(['id' => $id]);
+        $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
+
+        $job = $this->getDoctrine()->getRepository(Job::class)->find($id);
 
         return $this->render('jobs/show.html.twig', compact('job', 'categories'));
     }

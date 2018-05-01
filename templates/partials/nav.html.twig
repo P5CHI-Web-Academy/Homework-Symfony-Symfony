@@ -10,10 +10,10 @@
                 <a class="nav-link" href="{{ path('jobs.index') }}">All jobs <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</a>
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
-                    {% for category in jobeet.categories %}
-                        <a class="dropdown-item" href="{{ path('jobs.by.categorie', {'id': category.id}) }}">{{ category.name }}</a>
+                    {% for category in categories %}
+                        <a class="dropdown-item" href="{{ path('jobs.by.category', {'id': category.id}) }}">{{ category.name }}</a>
                     {% endfor %}
                 </div>
             </li>

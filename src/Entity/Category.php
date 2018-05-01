@@ -68,7 +68,7 @@ class Category
     {
         if (!$this->jobs->contains($job)) {
             $this->jobs[] = $job;
-            $job->setCategoryId($this);
+            $job->setCategory($this);
         }
 
         return $this;
@@ -76,13 +76,9 @@ class Category
 
     public function removeJob(Job $job): self
     {
-        if ($this->jobs->contains($job)) {
-            $this->jobs->removeElement($job);
-            // set the owning side to null (unless already changed)
-            if ($job->getCategoryId() === $this) {
-                $job->setCategoryId(null);
-            }
-        }
+        $this->jobs->removeElement($job);
+
+        $job->setCategory(null);
 
         return $this;
     }

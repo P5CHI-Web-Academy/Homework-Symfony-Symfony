@@ -2,31 +2,19 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Category;
+use Faker;
 use App\Entity\Job;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
-use Faker;
 
-class AppFixtures extends Fixture
+class JobsFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
         $faker = Faker\Factory::create();
-
-        for ( $i = 1; $i <= 10; $i++ ):
-            $category = new Category();
-            $category->setName(strtoupper($faker->word));
-            $manager->persist($category);
-
-            $this->addReference('category_' . $i, $category);
-
-        endfor;
-        $manager->flush();
-
-        for ($i = 1; $i <= 10; $i++):
+        for ($i = 1; $i <= 10; $i++) {
             $job = new Job();
-            $job->setCategoryId($this->getReference('category_' . rand(1,10)));
+            $job->setCategory($this->getReference('category_' . rand(1, 10)));
             $job->setType($faker->word);
             $job->setCompany($faker->company);
             $job->setLogo($faker->imageUrl(100, 100));
@@ -44,9 +32,8 @@ class AppFixtures extends Fixture
             $job->setUpdatedAt($faker->dateTime($max = 'now'));
 
             $manager->persist($job);
-        endfor;
+        }
+
         $manager->flush();
-
-
     }
 }
