@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Entity\Job;
-use App\Repository\CategoryRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -31,11 +30,9 @@ class JobsController extends Controller
     {
         $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
 
-        $category = $this->getDoctrine()->getRepository(Category::class)->find($id);
+        $jobs = $this->getDoctrine()->getRepository(Job::class)->findByCategory($id);
 
-        $jobs = $category->getJobs();
-
-        return $this->render('jobs/index.html.twig', compact('jobs', 'category', 'categories'));
+        return $this->render('jobs/index.html.twig', compact('jobs', 'categories'));
     }
 
     /**
