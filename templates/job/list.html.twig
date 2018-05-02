@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Job list{% endblock %}
+
+{% block body %}
+    <h1>Job list</h1>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Position</th>
+            <th>Company</th>
+            <th>Location</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for job in jobs %}
+            <tr>
+                <td scope="row">{{ loop.index }}</td>
+                <td>{{ job.position }}</td>
+                <td>{{ job.company }}</td>
+                <td>{{ job.location }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
