@@ -39,8 +39,7 @@ class JobsFixtures extends Fixture implements DependentFixtureInterface
                 ->setLogo($faker->imageUrl())
                 ->setPosition($faker->jobTitle)
                 ->setToken($faker->sha256)
-                ->setType($faker->word)
-                ->setExpiresAt($faker->dateTimeBetween('now', '+1 year'));
+                ->setType($faker->word);
 
             $manager->persist($job);
         }

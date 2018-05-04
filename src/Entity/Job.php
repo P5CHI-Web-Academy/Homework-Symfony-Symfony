@@ -453,6 +453,7 @@ class Job
     {
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
+        $this->expiresAt = new \DateTime('+30 days');
     }
 
     /**
