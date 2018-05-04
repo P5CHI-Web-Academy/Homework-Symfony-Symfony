@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-9">
+            <h1 class="mt-4">{{ job.position }}</h1>
+
+            <p class="lead">
+                by
+                <a href="#">{{ job.company }}</a>
+            </p>
+
+            <hr>
+
+            <p>Created on {{ job.createdAt.format('d-m-Y') }}</p>
+
+            <hr>
+
+            <img class="img-fluid rounded" src="{{ job.logo }}" alt="logo">
+
+            <hr>
+
+            <p class="lead">{{ job.description }}</p>
+
+            <p>{{ job.howToApply }}</p>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card my-5">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Location: {{ job.location }}</li>
+                    <li class="list-group-item">Contact: <a href="#">{{ job.email }}</a></li>
+                    <li class="list-group-item">Category: {{ job.category.name }}</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

@@ -24,7 +24,7 @@ class JobFixtures extends Fixture implements DependentFixtureInterface
             $job = new Job();
             $job->setType($faker->randomElement(['private', 'public']));
             $job->setCompany($faker->company);
-            $job->setLogo($job->getCompany());
+            $job->setLogo($faker->imageUrl());
             $job->setUrl($faker->url);
             $job->setPosition($faker->jobTitle);
             $job->setLocation($faker->city);
@@ -34,7 +34,6 @@ class JobFixtures extends Fixture implements DependentFixtureInterface
             $job->setPublic($faker->randomElement([true, false]));
             $job->setActivated(true);
             $job->setEmail($faker->companyEmail);
-            $job->setExpiresAt(new \DateTime('+2 months'));
 
             /** @var Category $category */
             $category = $this->getReference('category-' . rand(0, CategoryFixtures::TOTAL - 1));
