@@ -5,7 +5,7 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\JobRepository")
  * @ORM\Table(name="jobs")
  * @ORM\HasLifecycleCallbacks()
  */
@@ -236,11 +236,6 @@ class Job{
         return $this->createdAt;
     }
 
-    public function __construct()
-    {
-        $this->createdAt = new DateTime();
-    }
-
     /**
      * @return DateTime
      */
@@ -428,5 +423,14 @@ class Job{
         $this->category = $category;
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function prePersist(): void
+    {
+        $this->expiresAt = new \DateTime('+30 days');
+        $this->createdAt = new \DateTime();
     }
 }

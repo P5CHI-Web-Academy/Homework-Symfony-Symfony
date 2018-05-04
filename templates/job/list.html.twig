@@ -13,7 +13,9 @@
         {% for job in jobs %}
             <tr>
                 <td>{{ job.id }}</td>
-                <td>{{ job.position }}</td>
+                <td>
+                    <a href="{{ url('job.show', {id: job.id}) }}">{{ job.position }}</a>
+                </td>
                 <td>{{ job.company }}</td>
                 <td>{{ job.category.name }}</td>
             </tr>

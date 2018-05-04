@@ -25,15 +25,15 @@ class JobFixtures extends Fixture implements DependentFixtureInterface
             $job->setCompany($faker->company);
             $job->setDescription($faker->paragraph);
             $job->setEmail($faker->email);
-            $job->setExpiresAt($faker->dateTime);
+            $job->setExpiresAt($faker->dateTimeBetween($startDate = '-20 days', $endDate = '+20 days'));
             $job->setPublic($faker->boolean);
             $job->setToken($faker->password(6, 6));
             $job->setHowToApply($faker->paragraph);
             $job->setLocation($faker->city);
-            $job->setPosition($faker->word);
+            $job->setPosition($faker->jobTitle);
             $job->setUrl($faker->url);
             $job->setLogo($faker->imageUrl());
-            $job->setType($faker->jobTitle);
+            $job->setType($faker->word);
 
             $manager->persist($job);
         }
