@@ -25,4 +25,22 @@ class JobController extends AbstractController
             ]
         );
     }
+
+    /**
+     * @Route("job/{id}", name="app_job_view", requirements={"id" = "\d+"})
+     * @Method("GET")
+     *
+     * @param Job $job
+     * @return Response
+     */
+    public function viewAction(Job $job): Response
+    {
+        return $this->render(
+            'job/view.html.twig',
+            [
+                'job' => $job,
+            ]
+        );
+
+    }
 }

@@ -18,7 +18,7 @@
         {% for job in jobs %}
             <tr>
                 <td scope="row">{{ loop.index }}</td>
-                <td>{{ job.position }}</td>
+                <td><a href="{{ path('app_job_view', {'id': job.id}) }}">{{ job.position }}</a></td>
                 <td>{{ job.company }}</td>
                 <td>{{ job.location }}</td>
             </tr>
