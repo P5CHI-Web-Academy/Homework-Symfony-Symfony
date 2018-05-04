@@ -395,4 +395,16 @@ class Job
 
         return $this;
     }
+
+    /**
+     * @ORM\PrePersist
+     *
+     * @return void
+     */
+    public function prePersist(): void
+    {
+        if (!$this->expiresAt) {
+            $this->expiresAt = new \DateTime('+30 days');
+        }
+    }
 }

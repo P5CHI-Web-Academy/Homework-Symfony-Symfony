@@ -63,7 +63,7 @@ trait TimestampsTrait
      *
      * @return void
      */
-    public function prePersist(): void
+    public function presetTimestamps(): void
     {
         if (!$this->createdAt) {
             $this->createdAt = new \DateTime();
@@ -79,7 +79,7 @@ trait TimestampsTrait
      *
      * @return void
      */
-    public function preUpdate(): void
+    public function updateTimestamps(): void
     {
         $this->updatedAt = new \DateTime();
     }
