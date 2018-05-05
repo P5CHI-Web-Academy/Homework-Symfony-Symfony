@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="affiliates")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Affiliate
 {
@@ -60,7 +61,6 @@ class Affiliate
 
     public function __construct()
     {
-        $this->createdAt = new DateTime();
         $this->categories = new ArrayCollection();
     }
 
@@ -196,5 +196,13 @@ class Affiliate
         $this->createdAt = $createdAt;
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function prePersist(): void
+    {
+        $this->createdAt = new DateTime();
     }
 }

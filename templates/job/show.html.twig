@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ job.position }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h class="display-4">{{ job.position }}</h>
+        <p>{{ job.location }}</p>
+        <p>{{ job.description }}</p>
+        <p>Contacts: {{ job.email }}</p>
+        <p>Expires: {{ job.expiresAt|date("d/m/Y") }}</p>
+    </div>
+{% endblock %}

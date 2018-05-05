@@ -18,10 +18,23 @@ class JobController extends AbstractController {
      */
     public function listAction(): Response
     {
-        $jobs = $this->getDoctrine()->getRepository(Job::class)->findAll();
+        $jobs = $this->getDoctrine()->getRepository(Job::class)->findActiveJobs();
 
         return $this->render('job/list.html.twig', [
            'jobs' => $jobs
+        ]);
+    }
+
+    /**
+     * @Route("job/{id}", name="job.show", requirements={"id" = "\d+"})
+     * @Method("GET")
+     * @param Job $job
+     * @return Response
+     */
+    public function showAction(Job $job): Response
+    {
+        return $this->render('job/show.html.twig', [
+            'job' => $job
         ]);
     }
 }
