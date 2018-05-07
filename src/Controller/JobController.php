@@ -7,6 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use App\Entity\Job;
+use App\Entity\Category;
 
 class JobController extends AbstractController
 {
@@ -16,14 +17,14 @@ class JobController extends AbstractController
      */
     public function listAction(): Response
     {
-        $jobs = $this->getDoctrine()
-            ->getRepository(Job::class)
-            ->findActiveJobs();
+        $categories = $this->getDoctrine()
+            ->getRepository(Category::class)
+            ->findWithActiveJobs();
 
         return $this->render(
             'job/list.html.twig',
             [
-                'jobs' => $jobs,
+                'categories' => $categories,
             ]
         );
     }

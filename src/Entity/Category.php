@@ -79,6 +79,20 @@ class Category
     }
 
     /**
+     * @return ArrayCollection|Job[]
+     */
+    public function getActiveJobs()
+    {
+        $expires = new \DateTime();
+
+        return $this->jobs->filter(
+            function (Job $job) use ($expires) {
+                return $job->getExpiresAt() > $expires;
+            }
+        );
+    }
+
+    /**
      * @return Job[]|Collection
      */
     public function getJobs(): Collection
