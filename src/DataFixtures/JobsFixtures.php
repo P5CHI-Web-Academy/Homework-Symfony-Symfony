@@ -12,7 +12,7 @@ use App\Entity\Category;
 
 class JobsFixtures extends Fixture implements DependentFixtureInterface
 {
-    const COUNT = 50;
+    const COUNT = 100;
 
     /**
      * @param ObjectManager $manager
@@ -21,9 +21,14 @@ class JobsFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = Faker\Factory::create();
 
+        /** @var Category $category */
+        $category = $this->getReference(CategoryFixtures::generateRandomKeyReference());
+
         for ($i = 1; $i <= self::COUNT; $i++) {
-            /** @var Category $category */
-            $category = $this->getReference(CategoryFixtures::generateRandomKeyReference());
+
+            if ($i % 25 == 0) {
+                $category = $this->getReference(CategoryFixtures::generateRandomKeyReference());
+            }
 
             $job = new Job();
             $job

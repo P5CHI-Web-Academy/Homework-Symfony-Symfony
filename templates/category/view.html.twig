@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% set categoryName = category.name|upper %}
+
+{% block title %} {{ categoryName }} {% endblock %}
+
+{% block body %}
+
+    <h2>{{ categoryName }}</h2>
+
+    {% include 'job/table.html.twig' with {
+        'jobs': category.activeJobs|slice(0, max_jobs_on_homepage)
+    } only %}
+
+{% endblock %}
