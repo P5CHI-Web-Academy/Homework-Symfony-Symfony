@@ -6,7 +6,11 @@
 
     {% for category in categories %}
 
-        <h3>{{ category.name|upper }}</h3>
+        <h3>
+            <a href="{{ path('app_category_view', {'slug': category.slug}) }}">
+                {{ category.name|upper }}
+            </a>
+        </h3>
 
         {% include 'job/table.html.twig' with {
             'jobs': category.activeJobs|slice(0, max_jobs_on_homepage)
