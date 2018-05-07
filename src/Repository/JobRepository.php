@@ -29,4 +29,24 @@ class JobRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    /**
+     * @param int $id
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function findActiveJob(int $id)
+    {
+        return $this->createQueryBuilder('j')
+            ->andWhere('j.id = :id')
+            ->andWhere('j.expiresAt > :datetime')
+            ->andWhere('j.activated = :activated')
+            ->setParameters([
+                'id' => $id,
+                'datetime' => new \DateTime(),
+                'activated' => true,
+            ])
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

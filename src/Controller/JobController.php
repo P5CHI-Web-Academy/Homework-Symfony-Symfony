@@ -2,36 +2,44 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Job;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route(name="job.")
+ */
 class JobController extends AbstractController {
 
     /**
-     * @Route("/", name="job.list")
+     * @Route("/", name="list")
      * @Method("GET")
      * @return Response
      * @throws \LogicException
      */
-    public function listAction(): Response
+    public function list(): Response
     {
-        $jobs = $this->getDoctrine()->getRepository(Job::class)->findActiveJobs();
+        $categories = $this->getDoctrine()
+            ->getRepository(Category::class)
+            ->findCategoriesWithActiveJobs();
 
         return $this->render('job/list.html.twig', [
-           'jobs' => $jobs
+           'categories' => $categories
         ]);
     }
 
     /**
-     * @Route("job/{id}", name="job.show", requirements={"id" = "\d+"})
+     * @Route("job/{id}", name="show", requirements={"id" = "\d+"})
      * @Method("GET")
+     * @Entity("job", expr="repository.findActiveJob(id)")
      * @param Job $job
      * @return Response
      */
-    public function showAction(Job $job): Response
+    public function show(Job $job): Response
     {
         return $this->render('job/show.html.twig', [
             'job' => $job
