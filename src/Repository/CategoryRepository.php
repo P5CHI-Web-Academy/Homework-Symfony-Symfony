@@ -24,32 +24,59 @@ class CategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, Category::class);
     }
 
-//    /**
-//     * @return Category[] Returns an array of Category objects
-//     */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+    /**
+     * @param $field
+     * @param $order
+     *
+     * @return array
+     */
+    public function findAllWithJobsActiveNotExpiredWithOrderByField(
+        $field,
+        $order
+    ): array {
+        if (\in_array($field, [
+                'location',
+                'company',
+                'position',
+                'createdAt',
+            ])
+            && \in_array($order, [
+                'ASC',
+                'DESC',
+            ])
+        ) {
+            return $this->createQueryBuilder('c')
+                        ->select('c, j')
+                        ->innerJoin('c.jobs', 'j')
+                        ->where('j.activated = true')
+                        ->andWhere('j.expiresAt > :nowDate')
+                        ->orderBy('j.' . $field, $order)
+                        ->setParameter('nowDate', new \DateTime())
+                        ->getQuery()
+                        ->getResult();
+        }
 
-    /*
-    public function findOneBySomeField($value): ?Category
+        return [];
+    }
+
+    /**
+     * @param $slug
+     *
+     * @return Category|null
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\ORM\NoResultException
+     */
+    public function findBySlugWithActiveJobsNotExpired($slug): ?Category
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+                    ->select('c, j')
+                    ->join('c.jobs', 'j')
+                    ->where('j.activated = true')
+                    ->andWhere('j.expiresAt > :nowDate')
+                    ->andWhere('c.slug = :slug')
+                    ->setParameter('nowDate', new \DateTime())
+                    ->setParameter('slug', $slug)
+                    ->getQuery()
+                    ->getSingleResult();
     }
-    */
 }

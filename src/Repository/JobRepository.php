@@ -70,19 +70,20 @@ class JobRepository extends ServiceEntityRepository
         return [];
     }
 
-    public function findAllByPositionOrderBy($position, $order): array
+    /**
+     * @param $id
+     *
+     * @return Job|null
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function findActiveJob(int $id): ?Job
     {
         return $this->createQueryBuilder('j')
-                    ->andWhere('j.activated = true')
-                    ->andWhere('j.position like %:position%')
-                    ->orderBy('j.' . $position, ', :order')
-                    ->setParameters([
-                        'position' => $position,
-                        'order' => $order,
-                    ])
+                    ->where('j.activated = true')
+                    ->andWhere('j.id = :id')
+                    ->setParameter('id', $id)
                     ->getQuery()
-                    ->getResult();
-
+                    ->getOneOrNullResult();
     }
 
 }
