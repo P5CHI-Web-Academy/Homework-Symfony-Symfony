@@ -229,6 +229,14 @@ class Job{
     }
 
     /**
+     * @return bool
+     */
+    public function isActive(): bool
+    {
+        return ($this->getExpiresAt() > new \DateTime() && $this->isActivated());
+    }
+
+    /**
      * @return DateTime
      */
     public function getCreatedAt(): DateTime
@@ -430,7 +438,10 @@ class Job{
      */
     public function prePersist(): void
     {
-        $this->expiresAt = new \DateTime('+30 days');
         $this->createdAt = new \DateTime();
+
+        if (!$this->expiresAt) {
+            $this->expiresAt = new \DateTime('+30 days');
+        }
     }
 }

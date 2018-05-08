@@ -18,10 +18,10 @@ class JobFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         $faker = Faker\Factory::create('en_US');
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 20; $i++) {
             $job = new Job();
             $job->setActivated(true);
-            $job->setCategory($this->getReference('category_' . $i));
+            $job->setCategory($this->getReference('category_' . $faker->numberBetween(0,9)));
             $job->setCompany($faker->company);
             $job->setDescription($faker->paragraph);
             $job->setEmail($faker->email);
