@@ -3,4 +3,4 @@ twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
     globals:
-      jobs_show_limit_main_page: 10
+        jobs_show_limit_main_page: 10

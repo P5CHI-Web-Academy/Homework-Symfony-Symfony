@@ -14,15 +14,16 @@ use Symfony\Component\Routing\Annotation\Route;
 class CategoryController extends AbstractController
 {
     /**
-     * @Route("/category/{slug}", name="category_job_list")
+     * @Route("/category/{slug}", name="job_list")
      * @Method("GET")
      * @param Category $category
      * @return Response
      */
     public function showJobList(Category $category): Response
     {
-        return $this->render('category/category_job_list.html.twig', [
-            'category' => $category,
+        return $this->render(
+            'category/job_list.html.twig', [
+            'categoryName' => $category->getName(),
             'jobs' => $category->getJobs(),
         ]);
     }
