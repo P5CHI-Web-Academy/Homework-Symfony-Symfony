@@ -9,7 +9,10 @@
     <h2>{{ categoryName }}</h2>
 
     {% include 'job/table.html.twig' with {
-        'jobs': category.activeJobs|slice(0, max_jobs_on_homepage)
+        'jobs': activeJobs
     } only %}
 
+    <div class="navigation text-center">
+        {{ knp_pagination_render(activeJobs) }}
+    </div>
 {% endblock %}
