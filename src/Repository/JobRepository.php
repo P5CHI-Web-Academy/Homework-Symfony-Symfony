@@ -2,8 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\Category;
 use App\Entity\Job;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\AbstractQuery;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class JobRepository extends ServiceEntityRepository
@@ -48,5 +50,19 @@ class JobRepository extends ServiceEntityRepository
             ])
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    /**
+     * @param Category $category
+     * @return AbstractQuery
+     */
+    public function findJobsByCategoryQuery(Category $category): AbstractQuery
+    {
+        return $this->createQueryBuilder('j')
+            ->andWhere('j.category = :category')
+            ->setParameters([
+                'category' => $category,
+            ])
+            ->getQuery();
     }
 }

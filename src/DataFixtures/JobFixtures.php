@@ -18,14 +18,14 @@ class JobFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         $faker = Faker\Factory::create('en_US');
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 600; $i++) {
             $job = new Job();
             $job->setActivated(true);
             $job->setCategory($this->getReference('category_' . $faker->numberBetween(0,9)));
             $job->setCompany($faker->company);
             $job->setDescription($faker->paragraph);
             $job->setEmail($faker->email);
-            $job->setExpiresAt($faker->dateTimeBetween('-20 days', '+20 days'));
+            $job->setExpiresAt($faker->dateTimeBetween('-10 days', '+20 days'));
             $job->setPublic($faker->boolean);
             $job->setToken($faker->password(6, 6));
             $job->setHowToApply($faker->paragraph);
