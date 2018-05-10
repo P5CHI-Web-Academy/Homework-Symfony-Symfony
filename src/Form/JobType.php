@@ -4,7 +4,6 @@ namespace App\Form;
 
 use App\Entity\Category;
 use App\Entity\Job;
-
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -27,8 +26,8 @@ class JobType extends AbstractType
             ->add('type', ChoiceType::class, [
                 'label' => 'job.type',
                 'choices' => [
-                    'public' => 'Public',
-                    'private' => 'Private',
+                    'public' => 'public',
+                    'private' => 'private',
                 ]
             ])
             ->add('company', TextType::class, [

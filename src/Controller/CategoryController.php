@@ -46,7 +46,7 @@ class CategoryController extends Controller
 
         return $this->render('category/show.html.twig', [
             'category' => $category,
-            'paginatedJobs' => $pagerFanta
+            'paginatedJobs' => $pagerFanta,
         ]);
     }
 }
