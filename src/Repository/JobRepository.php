@@ -56,12 +56,16 @@ class JobRepository extends ServiceEntityRepository
      * @param Category $category
      * @return AbstractQuery
      */
-    public function findJobsByCategoryQuery(Category $category): AbstractQuery
+    public function findActiveJobsByCategoryQuery(Category $category): AbstractQuery
     {
         return $this->createQueryBuilder('j')
             ->andWhere('j.category = :category')
+            ->andWhere('j.activated = :activated')
+            ->andWhere('j.expiresAt > :datetime')
             ->setParameters([
                 'category' => $category,
+                'activated' => true,
+                'datetime' => new \DateTime(),
             ])
             ->getQuery();
     }

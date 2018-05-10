@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CategoryController extends Controller
 {
     /**
-     * @Route("/category/{slug}/{page}", name="job_list", defaults={"page": 1})
+     * @Route("/category/{slug}/{page}", name="job_list", requirements={"page" = "\d+"}, defaults={"page": 1})
      * @Method("GET")
      * @param Category $category
      * @param int $page
@@ -29,7 +29,7 @@ class CategoryController extends Controller
         PaginatorInterface $paginator
     ): Response {
         $jobs = $paginator->paginate(
-            $this->getDoctrine()->getRepository(Job::class)->findJobsByCategoryQuery($category),
+            $this->getDoctrine()->getRepository(Job::class)->findActiveJobsByCategoryQuery($category),
             $page,
             $this->getParameter('jobs_show_limit_category')
         );

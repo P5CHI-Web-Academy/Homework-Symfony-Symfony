@@ -14,7 +14,7 @@
                 <th>Expires at</th>
             </tr>
             {% for job in jobs %}
-                <tr {% if not job.active %} class="table-danger" {% endif %}>
+                <tr>
                     <td>{{ job.id }}</td>
                     <td>
                         <a href="{{ url('job.show', {id: job.id}) }}">{{ job.position }}</a>
