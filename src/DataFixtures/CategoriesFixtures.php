@@ -13,7 +13,7 @@ class CategoriesFixtures extends Fixture
     {
         $faker = Faker\Factory::create();
 
-        for ( $i = 1; $i <= 10; $i++ ) {
+        for ( $i = 1; $i <= 5; $i++ ) {
             $category = new Category();
             $category->setName(strtoupper($faker->word));
             $manager->persist($category);
