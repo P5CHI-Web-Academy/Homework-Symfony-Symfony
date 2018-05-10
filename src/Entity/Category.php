@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
@@ -27,6 +28,14 @@ class Category
      * @ORM\Column(type="string", length=100)
      */
     private $name;
+
+    /**
+     * @var string
+     *
+     * @Gedmo\Slug(fields={"name"})
+     * @ORM\Column(type="string", length=150, unique=true)
+     */
+    private $slug;
 
     /**
      * @var Job
@@ -88,6 +97,20 @@ class Category
     }
 
     /**
+    * @return Collection|Job[]
+    */
+    public function getActiveJobs()
+    {
+        $expires = new \DateTime();
+
+        return $this->jobs->filter(
+            function (Job $job) use ($expires) {
+                return $job->getExpiresAt() > $expires;
+            }
+        );
+    }
+
+    /**
      * @param Job $job
      * @return Category
      */
@@ -146,5 +169,21 @@ class Category
         }
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param string $slug
+     */
+    public function setSlug(string $slug): void
+    {
+        $this->slug = $slug;
     }
 }

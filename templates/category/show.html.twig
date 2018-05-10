@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1 class="text-center mt-3">{{ category.name }}</h1>
+
+    {% include 'job/_table.html.twig' with {
+        'jobs': paginatedJobs.currentPageResults
+    } only %}
+
+    <div class="pagerfanta d-flex justify-content-center">
+        {{ pagerfanta(paginatedJobs, 'twitter_bootstrap4') }}
+    </div>
+
+{% endblock %}

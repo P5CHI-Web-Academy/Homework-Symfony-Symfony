@@ -10,12 +10,16 @@
                 <a class="nav-link dropdown-toggle" href="#" id="jobs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Jobs</a>
                 <div class="dropdown-menu" aria-labelledby="jobs">
                     <a class="dropdown-item" href="{{ path('job.list') }}">List</a>
+                    <a class="dropdown-item" href="{{ path('job.create') }}">Create</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="jobs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Category</a>
+                <div class="dropdown-menu" aria-labelledby="jobs">
+                    <a class="dropdown-item" href="{{ path('category.list') }}">List</a>
                 </div>
             </li>
         </ul>
-        {#<form class="form-inline my-2 my-lg-0">#}
-        {#<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">#}
-        {#<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>#}
-        {#</form>#}
+
     </div>
 </nav>

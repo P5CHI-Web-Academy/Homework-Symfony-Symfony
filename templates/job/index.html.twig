@@ -23,7 +23,7 @@
                 <td><a href="{{ url('job.show', {'job': job.id}) }}">{{ job.position }}</a></td>
                 <td>{{ job.location }}</td>
                 <td>{{ job.email }}</td>
-                <td><a href="#">{{ job.category.name }}</a></td>
+                <td><a href="{{ url('category.show', {'slug' : job.category.slug}) }}">{{ job.category.name }}</a></td>
             </tr>
         {% endfor %}
         </tbody>
