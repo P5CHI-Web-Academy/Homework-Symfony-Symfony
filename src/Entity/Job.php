@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Traits\TimestampsTrait;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\JobRepository")
@@ -169,18 +170,18 @@ class Job
     }
 
     /**
-     * @return null|string
+     * @return null|string|UploadedFile
      */
-    public function getLogo(): ?string
+    public function getLogo()
     {
         return $this->logo;
     }
 
     /**
-     * @param string $logo
+     * @param string|UploadedFile|null $logo
      * @return Job
      */
-    public function setLogo(string $logo): self
+    public function setLogo($logo): self
     {
         $this->logo = $logo;
 

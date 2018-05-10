@@ -1,6 +1,7 @@
 .env
 /vendor/
 /.idea/
+/public/uploads/*
 
 /var/cache/*
 /var/log/*

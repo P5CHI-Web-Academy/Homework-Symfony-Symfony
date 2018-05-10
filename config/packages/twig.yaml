@@ -5,3 +5,4 @@ twig:
     form_themes: ['bootstrap_4_layout.html.twig']
     globals:
         max_jobs_per_category: '%max_jobs_per_category%'
+        jobs_upload_path: '/uploads/jobs/'
