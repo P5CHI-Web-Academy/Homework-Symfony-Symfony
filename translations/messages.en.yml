@@ -1,0 +1,15 @@
+job.type: Type
+job.company: Company name
+job.logo: Logo
+job.url: Link
+job.position: Position
+job.location: City
+job.description: Description
+job.howToApply: How to apply
+job.token: Token (unique)
+job.public: Public ?
+job.activated: Active ?
+job.email: Contact email
+job.category: Category
+public: Public
+private: Private

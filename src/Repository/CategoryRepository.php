@@ -14,9 +14,34 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class CategoryRepository extends ServiceEntityRepository
 {
+    /**
+     * CategoryRepository constructor.
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Category::class);
     }
 
+    /**
+     * @return Category[]
+     */
+    public function findWithActiveJobs(): array
+    {
+        $qb = $this->createQueryBuilder('c');
+
+        $qb
+            ->select('c', 'j')
+            ->innerJoin('c.jobs', 'j')
+            ->where('j.expiresAt > :expireDate')
+            ->andWhere('j.activated = :activated')
+            ->setParameters([
+                'expireDate' => new \DateTime(),
+                'activated' => true,
+            ]);
+
+        return $qb
+            ->getQuery()
+            ->getResult();
+    }
 }
