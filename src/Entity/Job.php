@@ -183,7 +183,7 @@ class Job
     /**
      * @return string|null
      */
-    public function getLogo(): ?string
+    public function getLogo()
     {
         return $this->logo;
     }
@@ -192,7 +192,7 @@ class Job
      * @param string $logo
      * @return Job
      */
-    public function setLogo(string $logo): self
+    public function setLogo($logo): self
     {
         $this->logo = $logo;
 
