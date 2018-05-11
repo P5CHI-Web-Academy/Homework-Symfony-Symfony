@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
+    {% endblock %}
+</head>
+<body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
+
+{% include 'home/header.html.twig' %}
+{% include 'home/sidebar.html.twig' %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="main-table">
+            {% block body %}
+            {% endblock %}
+        </div>
+    </div>
+</div>
+{% include 'home/footer.html.twig' %}
+
+{% block javascripts %}
+    <script src="{{ asset('build/js/vendor.js') }}"></script>
+{% endblock %}
+</body>
+</html>
