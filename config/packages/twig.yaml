@@ -3,4 +3,6 @@ twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
     globals:
-        jobs_show_limit_main_page: 10
+        jobs_show_limit_main_page: '%jobs_show_limit_main_page%'
+    form_themes:
+        - 'bootstrap_4_horizontal_layout.html.twig'
