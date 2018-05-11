@@ -12,6 +12,7 @@
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <a class="navbar-brand" href="/">Jobeet</a>
+            <a href="{{ url('job.create') }}" class="btn btn-light ml-auto">Create Job</a>
         </nav>
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}

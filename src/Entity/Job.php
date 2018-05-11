@@ -3,6 +3,7 @@ namespace App\Entity;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\JobRepository")
@@ -32,7 +33,7 @@ class Job{
     private $company;
 
     /**
-     * @var string
+     * @var string|null
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $logo;
@@ -125,65 +126,65 @@ class Job{
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getCompany(): string
+    public function getCompany(): ?string
     {
         return $this->company;
     }
 
     /**
-     * @return string
+     * @return string|UploadedFile|null
      */
-    public function getLogo(): string
+    public function getLogo()
     {
         return $this->logo;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getUrl(): string
+    public function getUrl(): ?string
     {
         return $this->url;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getPosition(): string
+    public function getPosition(): ?string
     {
         return $this->position;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getLocation(): string
+    public function getLocation(): ?string
     {
         return $this->location;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getHowToApply(): string
+    public function getHowToApply(): ?string
     {
         return $this->howToApply;
     }
@@ -197,33 +198,33 @@ class Job{
     }
 
     /**
-     * @return bool
+     * @return bool|null
      */
-    public function isPublic(): bool
+    public function isPublic(): ?bool
     {
         return $this->public;
     }
 
     /**
-     * @return bool
+     * @return bool|null
      */
-    public function isActivated(): bool
+    public function isActivated(): ?bool
     {
         return $this->activated;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
     /**
-     * @return DateTime
+     * @return DateTime|null
      */
-    public function getExpiresAt(): DateTime
+    public function getExpiresAt(): ?DateTime
     {
         return $this->expiresAt;
     }
@@ -283,10 +284,10 @@ class Job{
     }
 
     /**
-     * @param string $logo
+     * @param string|UploadedFile $logo
      * @return Job
      */
-    public function setLogo(string $logo): Job
+    public function setLogo($logo): Job
     {
         $this->logo = $logo;
 
