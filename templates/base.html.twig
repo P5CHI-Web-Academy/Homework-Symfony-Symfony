@@ -14,7 +14,17 @@
             <a class="navbar-brand" href="/">Jobeet</a>
             <a href="{{ url('job.create') }}" class="btn btn-light ml-auto">Create Job</a>
         </nav>
-        {% block body %}{% endblock %}
+
+        <div class="container mt-3 mb-4">
+            {% for message in app.flashes('notice') %}
+                <div class="alert alert-success" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+            {% block body %}{% endblock %}
+        </div>
+
         {% block javascripts %}{% endblock %}
     </body>
 </html>

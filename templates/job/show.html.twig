@@ -2,12 +2,32 @@
 
 {% block title %}{{ job.position }}{% endblock %}
 
+{% if isEditable is defined and isEditable %}
+    {% block stylesheets %}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/4.4.0/font/octicons.min.css">
+        <link rel="stylesheet" href="{{ asset('css/toolbar.css') }}">
+    {% endblock %}
+{% endif %}
+
 {% block body %}
-    <div class="container">
-        <h class="display-4">{{ job.position }}</h>
-        <p>{{ job.location }}</p>
-        <p>{{ job.description }}</p>
-        <p>Contacts: {{ job.email }}</p>
-        <p>Expires: {{ job.expiresAt|date("d/m/Y") }}</p>
-    </div>
+    {% if isEditable is defined and isEditable %}
+        {% if job.expiresAt > date() %}
+            Expires in {{ date( job.expiresAt|date ).diff( date() ).days }} days
+        {% endif %}
+        {% include 'job/toolbar.html.twig' with {
+            'job': job,
+            'deleteForm': deleteForm,
+            'activateForm': activateForm
+        } %}
+    {% endif %}
+    <h class="display-4">{{ job.position }}</h>
+    {% if job.logo %}
+        <div class="media-left">
+            <img class="media-object" style="width:100px; height:100px;" src="{{ asset(jobs_assets_directory ~ '/' ~ job.logo.filename) }}">
+        </div>
+    {% endif %}
+    <p>{{ job.location }}</p>
+    <p>{{ job.description }}</p>
+    <p>Contacts: {{ job.email }}</p>
+    <p>Expires: {{ job.expiresAt|date("d/m/Y") }}</p>
 {% endblock %}
