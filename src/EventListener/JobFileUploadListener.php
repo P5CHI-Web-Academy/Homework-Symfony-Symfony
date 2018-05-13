@@ -56,6 +56,22 @@ class JobFileUploadListener
     }
 
     /**
+     * @param LifecycleEventArgs $args
+     */
+    public function postRemove(LifecycleEventArgs $args)
+    {
+        $entity = $args->getEntity();
+
+        if (!$entity instanceof Job) {
+            return;
+        }
+
+        if ($file = $entity->getLogo()) {
+            $this->uploader->deleteFile($file->getFilename());
+        }
+    }
+
+    /**
      * @param $entity
      * @throws \Exception
      */
