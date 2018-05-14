@@ -43,7 +43,6 @@ class JobsFixtures extends Fixture implements DependentFixtureInterface
                 ->setLocation($faker->city)
                 ->setLogo($faker->imageUrl())
                 ->setPosition($faker->jobTitle)
-                ->setToken($faker->sha256)
                 ->setType($faker->word);
 
             $manager->persist($job);

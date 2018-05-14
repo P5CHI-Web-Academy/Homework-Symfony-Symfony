@@ -51,6 +51,16 @@ class FileUploader
     }
 
     /**
+     * @param string $fileName
+     */
+    public function deleteFile(string $fileName): void
+    {
+        $fullFileName = $this->getTargetDirectory().'/'.$fileName;
+
+        $this->filesystem->remove($fullFileName);
+    }
+
+    /**
      * @param UploadedFile $file
      * @return string
      * @throws \Exception

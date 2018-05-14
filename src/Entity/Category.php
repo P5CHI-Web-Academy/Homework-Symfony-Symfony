@@ -103,7 +103,7 @@ class Category
 
         return $this->jobs->filter(
             function (Job $job) use ($expires) {
-                return $job->getExpiresAt() > $expires;
+                return $job->getExpiresAt() > $expires && $job->isActivated();
             }
         );
     }

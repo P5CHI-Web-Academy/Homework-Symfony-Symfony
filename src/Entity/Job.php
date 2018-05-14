@@ -3,11 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Index;
 
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\JobRepository")
- * @ORM\Table(name="jobs")
+ * @ORM\Table(name="jobs", indexes={@Index(name="job_token_idx", columns={"token"})})
  * @ORM\HasLifecycleCallbacks()
  */
 class Job
@@ -181,7 +182,7 @@ class Job
     }
 
     /**
-     * @return string|null
+     * @return string|null|\Symfony\Component\HttpFoundation\File\File
      */
     public function getLogo()
     {

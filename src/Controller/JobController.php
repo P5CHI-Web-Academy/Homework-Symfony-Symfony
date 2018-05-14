@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -70,7 +72,7 @@ class JobController extends AbstractController
 
     /**
      *
-     * @Route("/job/update/{id}", name="app_job_update")
+     * @Route("/job/update/{token}", name="app_job_update", requirements={"token"="\w+"})
      * @Method({"GET", "POST"})
      *
      * @param Job $job
@@ -98,9 +100,11 @@ class JobController extends AbstractController
             $em->persist($job);
             $em->flush();
 
+            $this->addFlash('notice', 'Job has been saved');
+
             return $this->redirectToRoute(
-                'app_job_view',
-                ['id' => $job->getId()]
+                'app_job_preview',
+                ['token' => $job->getToken()]
             );
         }
 
@@ -112,4 +116,100 @@ class JobController extends AbstractController
             ]
         );
     }
+
+    /**
+     * @Route("job/{token}", name="app_job_preview", requirements={"token"="\w+"})
+     * @Method("GET")
+     *
+     * @param Job $job
+     * @return Response
+     */
+    public function previewAction(Job $job): Response
+    {
+        $deleteForm = $this->createDeleteForm($job);
+        $publishForm = $this->createPublishForm($job);
+
+        return $this->render(
+            'job/view.html.twig',
+            [
+                'job' => $job,
+                'hasControlAccess' => true,
+                'deleteForm' => $deleteForm->createView(),
+                'publishForm' => $publishForm->createView(),
+            ]
+        );
+    }
+
+    /**
+     * @Route("job/delete/{token}", name="app_job_delete", requirements={"token"="\w+"})
+     * @Method("DELETE")
+     *
+     * @param Request $request
+     * @param Job $job
+     * @param EntityManagerInterface $em
+     *
+     * @return Response
+     */
+    public function deleteAction(Job $job, Request $request, EntityManagerInterface $em): Response
+    {
+        $form = $this->createDeleteForm($job);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->remove($job);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('app_job_list');
+    }
+
+    /**
+     * @Route("job/publish/{token}", name="app_job_publish", requirements={"token"="\w+"})
+     * @Method("POST")
+     *
+     * @param Request $request
+     * @param Job $job
+     * @param EntityManagerInterface $em
+     *
+     * @return Response
+     */
+    public function publishAction(Job $job, Request $request, EntityManagerInterface $em): Response
+    {
+        $form = $this->createPublishForm($job);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $job->setActivated(true);
+            $em->flush();
+
+            $this->addFlash('notice', 'Job was published');
+        }
+
+        return $this->redirectToRoute('app_job_preview', ['token' => $job->getToken()]);
+    }
+
+    /**
+     * @param Job $job
+     * @return FormInterface
+     */
+    private function createDeleteForm(Job $job): FormInterface
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('app_job_delete', ['token' => $job->getToken()]))
+            ->setMethod('DELETE')
+            ->getForm();
+    }
+
+    /**
+     * @param Job $job
+     * @return FormInterface
+     */
+    private function createPublishForm(Job $job): FormInterface
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('app_job_publish', ['token' => $job->getToken()]))
+            ->setMethod('POST')
+            ->getForm();
+    }
+
 }
