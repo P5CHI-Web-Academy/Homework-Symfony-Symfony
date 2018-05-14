@@ -81,7 +81,7 @@ class JobController extends AbstractController {
     }
 
     /**
-     * @Route("job/{token}", name="view", requirements={"id" = "\w+"})
+     * @Route("job/{token}", name="view", requirements={"token" = "\w+"})
      * @Method("GET")
      * @param Job $job
      * @return Response
