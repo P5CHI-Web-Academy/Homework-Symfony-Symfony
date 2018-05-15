@@ -33,6 +33,43 @@
                     <li class="list-group-item">Category: {{ job.category.name }}</li>
                 </ul>
             </div>
+
+            {% if withActions is defined and withActions %}
+                <div class="card my-5">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <span class="font-weight-bold text-muted">Expiration: {{ job.expiresAt|time_diff }}</span>
+                        </li>
+                        {% if not job.activated %}
+                            <li class="list-group-item">
+                                <form method="POST" action="{{ url('job.publish', {'token': job.token}) }}">
+                                    <input type="hidden" name="_method" value="PATCH" />
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token('publish-token') }}" />
+
+                                    <button class="btn btn-primary btn-block btn-sm" type="submit">
+                                        <i class="fas fa-paper-plane" aria-hidden="true"></i> Publish
+                                    </button>
+                                </form>
+                            </li>
+                        {% endif %}
+                        <li class="list-group-item">
+                            <a href="{{ url('job.edit', {'token': job.token}) }}" class="btn btn-warning btn-block btn-sm">
+                                <i class="far fa-edit" aria-hidden="true"></i> Edit
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <form method="POST" action="{{ url('job.delete', {'token': job.token}) }}">
+                                <input type="hidden" name="_method" value="DELETE" />
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token('delete-token') }}" />
+
+                                <button class="btn btn-danger btn-block btn-sm" type="submit">
+                                    <i class="fas fa-trash-alt" aria-hidden="true"></i> Delete
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            {% endif %}
         </div>
 
     </div>
