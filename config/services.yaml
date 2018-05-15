@@ -3,6 +3,7 @@
 parameters:
     locale: 'en'
     pagination: 20
+    uploads: '%kernel.project_dir%/public/uploads/jobs'
 
 services:
     # default configuration for services in *this* file
@@ -12,9 +13,6 @@ services:
         public: false       # Allows optimizing the container by removing unused services; this also means
                             # fetching services directly from the container via $container->get() won't work.
                             # The best practice is to be explicit about your dependencies anyway.
-    jobeet:
-        class: App\Services\ViewShareService
-        arguments: ['@doctrine.orm.entity_manager']
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -30,4 +28,15 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    App\Service\FileUploader:
+        arguments:
+            $targetDirectory: '%uploads%'
 
+    App\EventListener\JobUploadListener:
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+
+    App\EventListener\JobTokenListener:
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }

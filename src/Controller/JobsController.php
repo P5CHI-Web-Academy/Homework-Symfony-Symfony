@@ -4,8 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Entity\Job;
-use App\Form\JobFormType;
+use App\Form\JobType;
+use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -24,11 +28,25 @@ class JobsController extends Controller
     }
 
     /**
-     *@Route("/jobs/create", name="jobs.create")
+     * @Route("/jobs/create", name="jobs.create")
+     * @Method({"GET", "POST"})
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function create(Request $request)
+    public function create(Request $request, EntityManagerInterface $em) : Response
     {
-        $form = $this->createForm(JobFormType::class, new Job());
+        $job = new Job();
+
+        $form = $this->createForm(JobType::class, $job);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($job);
+            $em->flush();
+
+            return $this->redirectToRoute('jobs.index');
+        }
 
         return $this->render('jobs/create.html.twig', [
             'form' => $form->createView(),
@@ -38,6 +56,7 @@ class JobsController extends Controller
 
     /**
      * @Route("/categories/{id}/jobs", name="jobs.by.category")
+     * @Method("GET")
      * @param $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -52,14 +71,12 @@ class JobsController extends Controller
 
     /**
      * @Route("/jobs/{id}", name="jobs.show")
-     * @param $id
+     * @param $job
      * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @Entity(name="job", expr="repository.findOrNull(id)")
      */
-    public function show($id)
+    public function show(Job $job)
     {
-        $job = $this->getDoctrine()->getRepository(Job::class)->findOrFail($id);
-
         return $this->render('jobs/show.html.twig', [
             'job' => $job,
         ]);

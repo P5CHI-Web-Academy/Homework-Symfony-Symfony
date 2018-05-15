@@ -14,6 +14,7 @@ class CategoriesController extends Controller
 
     /**
      * @Route("/categories", name="categories.index")
+     * @Method("GET")
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function index()
@@ -21,12 +22,12 @@ class CategoriesController extends Controller
         $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
 
         return $this->render('categories/index.html.twig', [
-            'categories' => $categories
+            'categories' => $categories,
         ]);
     }
 
     /**
-     * @Route("/categories/{slug}/{page}", name="categories.show", defaults={"page": 1})
+     * @Route("/categories/{slug}/{page}", name="categories.show", defaults={"page": 1}, requirements={"page"="\d+"})
      * @Method("GET")
      * @param Category $category
      * @param int $page

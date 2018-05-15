@@ -63,7 +63,7 @@ class JobRepository extends ServiceEntityRepository
      * @return mixed
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function findOrFail($id)
+    public function findOrNull($id)
     {
         return $this->createQueryBuilder('j')
             ->where('j.id = :id')

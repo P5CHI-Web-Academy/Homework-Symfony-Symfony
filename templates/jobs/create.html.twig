@@ -4,7 +4,7 @@
 
     <div class="my-3 p-3 bg-white rounded box-shadow mt-5 pt-5">
 
-        {{ form_start(form) }}
+        {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
 
             {{ form_widget(form) }}
 
