@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme form _self %}
+
+{% block file_widget %}
+    {% if data is defined and data is not empty %}
+        (<a target="_blank" href="{{ jobs_upload_path ~ '/' ~ data.filename }}">Current image</a>)
+    {% endif %}
+    <div class="file_widget">
+        {% set type = type|default('file') %}
+        {{ block('form_widget_simple') }}
+    </div>
+{% endblock %}
+
+{% block body %}
+    <h1 class="text-center mt-3">Edit job</h1>
+
+    {{ form_start(form, {method: 'POST', action: url('job.edit', {'token': job.token})}) }}
+        {{ form_widget(form) }}
+
+        <div class="form-group">
+            <button class="btn btn-primary pull-right" type="submit">
+                <i class="fa fa-paper-plane" aria-hidden="true"></i> Edit
+            </button>
+        </div>
+
+    {{ form_end(form) }}
+{% endblock %}

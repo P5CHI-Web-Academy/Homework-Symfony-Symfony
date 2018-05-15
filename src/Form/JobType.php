@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Category;
 use App\Entity\Job;
+use App\Form\DataTransformer\StringToFileTransformer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -22,6 +23,25 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class JobType extends AbstractType
 {
+    /**
+     * @var StringToFileTransformer
+     */
+    private $transformer;
+
+    /**
+     * JobType constructor.
+     *
+     * @param StringToFileTransformer $transformer
+     */
+    public function __construct(StringToFileTransformer $transformer)
+    {
+        $this->transformer = $transformer;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -101,6 +121,9 @@ class JobType extends AbstractType
                 'choice_label' => 'name',
             ])
         ;
+
+        $builder->get('logo')
+            ->addModelTransformer($this->transformer);
     }
 
     public function configureOptions(OptionsResolver $resolver)

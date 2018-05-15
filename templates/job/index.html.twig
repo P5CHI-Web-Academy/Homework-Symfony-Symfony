@@ -20,7 +20,7 @@
                 <th scope="row">{{ job.id }}</th>
                 <td>{{ job.type|capitalize }}</td>
                 <td>{{ job.company }}</td>
-                <td><a href="{{ url('job.show', {'job': job.id}) }}">{{ job.position }}</a></td>
+                <td><a href="{{ url('job.show', {'id': job.id}) }}">{{ job.position }}</a></td>
                 <td>{{ job.location }}</td>
                 <td>{{ job.email }}</td>
                 <td><a href="{{ url('category.show', {'slug' : job.category.slug}) }}">{{ job.category.name }}</a></td>

@@ -36,4 +36,12 @@ class FileUploader
 
         return $fileName;
     }
+
+    /**
+     * @return string
+     */
+    public function getUploadPath(): string
+    {
+        return $this->uploadPath;
+    }
 }
