@@ -4,5 +4,6 @@ twig:
     strict_variables: '%kernel.debug%'
     globals:
         jobs_show_limit_main_page: '%jobs_show_limit_main_page%'
+        jobs_assets_directory: '/uploads/jobs'
     form_themes:
         - 'bootstrap_4_horizontal_layout.html.twig'

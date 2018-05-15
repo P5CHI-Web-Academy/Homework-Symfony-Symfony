@@ -99,7 +99,6 @@ class JobType extends AbstractType
                     'Yes' => true,
                     'No' => false,
                 ],
-                'data' => true,
                 'expanded' => true,
                 'label' => 'Public',
                 'constraints' => [
@@ -111,14 +110,13 @@ class JobType extends AbstractType
                     'Yes' => true,
                     'No' => false,
                 ],
-                'data' => true,
                 'expanded' => true,
                 'constraints' => [
                     new NotNull(),
                 ],
             ])
             ->add('expiresAt', DateType::class, [
-                'data' => new \DateTime(),
+                'years' => range(date('Y'), date('Y')+2),
                 'constraints' => [
                     new GreaterThan(new \DateTime()),
                 ],

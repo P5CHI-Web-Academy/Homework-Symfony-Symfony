@@ -32,7 +32,7 @@ class JobFixtures extends Fixture implements DependentFixtureInterface
             $job->setLocation($faker->city);
             $job->setPosition($faker->jobTitle);
             $job->setUrl($faker->url);
-            $job->setLogo($faker->imageUrl());
+            $job->setLogo(null); // No logo by default
             $job->setType($faker->word);
 
             $manager->persist($job);

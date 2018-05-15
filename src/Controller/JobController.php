@@ -12,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use \Symfony\Component\Form\FormInterface;
 
 /**
  * @Route(name="job.")
@@ -66,11 +67,137 @@ class JobController extends AbstractController {
             $em->persist($job);
             $em->flush();
 
-            return $this->redirectToRoute('job.list');
+            $this->addFlash('notice', 'Job has been created');
+
+            return $this->redirectToRoute(
+                'job.view',
+                ['token' => $job->getToken(),]
+            );
         }
 
         return $this->render('job/create.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("job/{token}", name="view", requirements={"token" = "\w+"})
+     * @Method("GET")
+     * @param Job $job
+     * @return Response
+     */
+    public function view(Job $job): Response
+    {
+        $deleteForm = $this->createDeleteForm($job);
+        $activateForm = $this->createActivateForm($job);
+
+        return $this->render('job/show.html.twig', [
+            'job' => $job,
+            'deleteForm' => $deleteForm->createView(),
+            'activateForm' => $activateForm->createView(),
+            'isEditable' => true,
+        ]);
+    }
+
+    /**
+     * @Route("job/{token}/edit", name="edit", requirements={"token" = "\w+"})
+     * @Method({"GET", "POST"})
+     * @param Request $request
+     * @param Job $job
+     * @param EntityManagerInterface $em
+     * @return Response
+     */
+    public function edit(Request $request, Job $job, EntityManagerInterface $em): Response
+    {
+        $form = $this->createForm(JobType::class, $job);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->flush();
+
+            $this->addFlash('notice', 'Job info has been updated');
+
+            return $this->redirectToRoute(
+                'job.view',
+                ['token' => $job->getToken(),]
+            );
+        }
+
+        return $this->render('job/edit.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("job/{token}/delete", name="delete", requirements={"token" = "\w+"})
+     * @Method("DELETE")
+     * @param Request $request
+     * @param Job $job
+     * @param EntityManagerInterface $em
+     * @return Response
+     */
+    public function delete(Request $request, Job $job, EntityManagerInterface $em): Response
+    {
+        $form = $this->createDeleteForm($job);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->remove($job);
+            $em->flush();
+
+            $this->addFlash('notice', 'Job has been deleted');
+        }
+
+        return $this->redirectToRoute('job.list');
+    }
+
+    /**
+     * @Route("job/{token}/activate", name="activate", requirements={"token" = "\w+"})
+     * @Method("POST")
+     * @param Request $request
+     * @param Job $job
+     * @param EntityManagerInterface $em
+     * @return Response
+     */
+    public function activate(Request $request, Job $job, EntityManagerInterface $em): Response
+    {
+        $form = $this->createActivateForm($job);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $job->setActivated(true);
+            $em->flush();
+
+            $this->addFlash('notice', 'Job has been activated');
+        }
+
+        return $this->redirectToRoute(
+            'job.view',
+            ['token' => $job->getToken(),]
+        );
+    }
+
+    /**
+     * @param Job $job
+     * @return FormInterface
+     */
+    public function createDeleteForm(Job $job): FormInterface
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('job.delete', ['token' => $job->getToken()]))
+            ->setMethod('DELETE')
+            ->getForm();
+    }
+
+    /**
+     * @param Job $job
+     * @return FormInterface
+     */
+    public function createActivateForm(Job $job): FormInterface
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('job.activate', ['token' => $job->getToken()]))
+            ->setMethod('POST')
+            ->getForm();
     }
 }
