@@ -2,8 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\Category;
 use App\Entity\Job;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\AbstractQuery;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -20,15 +22,73 @@ class JobRepository extends ServiceEntityRepository
     }
 
     /**
+     * @return Job[] Returns an array of Job objects
+     */
+    public function findActiveJobs()
+    {
+        return $this->createQueryBuilder('j')
+            ->where('j.activated = :activated')
+            ->andWhere('j.expiresAt > :date')
+            ->setParameters([
+                'activated' => true,
+                'date' => new \DateTime(),
+            ])
+            ->orderBy('j.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
      * @param $id
      * @return Job[] Returns an array of Job objects
      */
     public function findByCategory($id)
     {
-        return $this->createQueryBuilder('jobs')
-            ->where('jobs.category = :value')
-            ->setParameter('value', $id)
+        return $this->createQueryBuilder('j')
+            ->select('j')
+            ->where('j.category = :id')
+            ->andWhere('j.activated = :activated')
+            ->andWhere('j.expiresAt > :date')
+            ->setParameters([
+                'id' => $id,
+                'activated' => true,
+                'date' => new \DateTime(),
+            ])
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function findOrNull($id)
+    {
+        return $this->createQueryBuilder('j')
+            ->where('j.id = :id')
+            ->andWhere('j.activated = :activated')
+            ->andWhere('j.expiresAt > :date')
+            ->setParameters([
+                'id' => $id,
+                'activated' => true,
+                'date' => new \DateTime(),
+            ])
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function findPaginatedJobsByCategory(Category $category) : AbstractQuery
+    {
+        return $this->createQueryBuilder('j')
+            ->where('j.category = :category')
+            ->andWhere('j.activated = :activated')
+            ->andWhere('j.expiresAt > :date')
+            ->setParameters([
+                'category' => $category,
+                'activated' => true,
+                'date' => new \DateTime(),
+            ])
+            ->getQuery();
     }
 }

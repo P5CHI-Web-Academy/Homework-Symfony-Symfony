@@ -12,9 +12,9 @@ class JobsFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $faker = Faker\Factory::create();
-        for ($i = 1; $i <= 10; $i++) {
+        for ($i = 1; $i <= 500; $i++) {
             $job = new Job();
-            $job->setCategory($this->getReference('category_' . rand(1, 10)));
+            $job->setCategory($this->getReference('category_' . rand(1, 5)));
             $job->setType($faker->word);
             $job->setCompany($faker->company);
             $job->setLogo($faker->imageUrl(100, 100));
@@ -24,12 +24,9 @@ class JobsFixtures extends Fixture
             $job->setDescription($faker->text);
             $job->setHowToApply($faker->paragraph);
             $job->setToken(uniqid());
-            $job->setPublic($faker->boolean(90));
-            $job->setActivated($faker->boolean(95));
+            $job->setPublic($faker->boolean(50));
+            $job->setActivated($faker->boolean(50));
             $job->setEmail($faker->email);
-            $job->setExpiresAt($faker->dateTime($max = 'now'));
-            $job->setCreatedAt($faker->dateTime($max = 'now'));
-            $job->setUpdatedAt($faker->dateTime($max = 'now'));
 
             $manager->persist($job);
         }
